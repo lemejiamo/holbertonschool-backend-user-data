@@ -46,6 +46,9 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request():
+    """
+    verifications before_request
+    """
     if auth is None:
         return
 
