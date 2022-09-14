@@ -29,9 +29,8 @@ class DB:
         return self.__session
 
     def add_user(self, email: str = None, hashed_password: str = None) -> User:
-        """Adds a new user to database"""
-        if email is None or hashed_password is None:
-            return None
+        """Adds a new user to database
+        """
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
