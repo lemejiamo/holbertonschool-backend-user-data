@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     Class User inherits from Base class from SQLAlchemy
 """
