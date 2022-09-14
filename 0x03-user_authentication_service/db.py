@@ -1,11 +1,10 @@
-#!/usr/bin/env  python3
+#!/usr/bin/env python3
 """DB module
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
-from user import Base, User
+from user import User, Base
 
 
 class DB:
@@ -29,8 +28,9 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> User:
-        """Adds a new user to database"""
+    def add_user(self, email: str = None, hashed_password: str = None) -> User:
+        """Adds a new user to database
+        """
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
