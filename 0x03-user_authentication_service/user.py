@@ -1,3 +1,7 @@
+"""
+    Class User inherits from Base class from SQLAlchemy
+"""
+
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
@@ -8,6 +12,9 @@ Base = declarative_base()
 
 
 class User(Base):
+    """
+        definition of users table
+    """
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
