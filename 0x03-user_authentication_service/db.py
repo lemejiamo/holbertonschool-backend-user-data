@@ -4,7 +4,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from user import User, Base
 
 
@@ -35,3 +36,15 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kargs) -> User:
+        """Find a user by arbitrary keyword argument"""
+        FILTERS = ('email', 'id', 'hashed_password', 'session_id', 'reset_token')
+        key = kargs.__iter__().__next__()
+        if key not in FILTERS or not kargs:
+            raise InvalidRequestError
+
+        user = self._session.query(User).filter_by(**kargs).first()
+        if user is None:
+            raise NoResultFound
+        return user
