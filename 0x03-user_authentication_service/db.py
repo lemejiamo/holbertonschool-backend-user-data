@@ -41,8 +41,9 @@ class DB:
         """Find a user by arbitrary keyword argument"""
         FIL = ('email', 'id', 'hashed_password', 'session_id', 'reset_token')
         key = kargs.__iter__().__next__()
-        if key not in FIL or not kargs:
-            raise InvalidRequestError
+        for key, value in kargs.items():
+            if key not in FIL or not kargs:
+                raise InvalidRequestError
 
         user = self._session.query(User).filter_by(**kargs).first()
         if user is None:
