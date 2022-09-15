@@ -59,3 +59,29 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update the user’s attributes as passed in the method’s
+        arguments then commit changes to the database.
+        Takes as argument a required user_id
+        """
+        if user_id is None or kwargs is None:
+            return None
+
+        filters = ('email',
+                   'id',
+                   'hashed_password',
+                   'session_id',
+                   'reset_token')
+
+        try:
+            user = self.find_user_by(id=user_id)
+            for key, value in kwargs.items():
+                print(key)
+                if key in filters:
+                    setattr(user, key, value)
+            print(user)
+        except NoResultFound or InvalidRequestError:
+            raise ValueError
+
+        self._session.commit()
