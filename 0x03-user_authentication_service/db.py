@@ -37,20 +37,20 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kargs) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Find a user by arbitrary keyword argument"""
         filters = ('email',
                    'id',
                    'hashed_password',
                    'session_id',
                    'reset_token')
-        if not kargs:
+        if not kwargs:
             raise InvalidRequestError
-        for key, value in kargs.items():
+        for key, value in kwargs.items():
             if key not in filters:
                 raise InvalidRequestError
 
-        user = self._session.query(User).filter_by(**kargs).first()
+        user = self._session.query(User).filter_by(**kwargs).first()
         if user is None:
             raise NoResultFound
         return user
