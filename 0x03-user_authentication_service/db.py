@@ -39,12 +39,15 @@ class DB:
 
     def find_user_by(self, **kargs) -> User:
         """Find a user by arbitrary keyword argument"""
-        FIL = ('email', 'id', 'hashed_password', 'session_id', 'reset_token')
-
+        filters = ('email',
+                   'id',
+                   'hashed_password',
+                   'session_id',
+                   'reset_token')
         if not kargs:
             raise InvalidRequestError
         for key, value in kargs.items():
-            if key not in FIL:
+            if key not in filters:
                 raise InvalidRequestError
 
         user = self._session.query(User).filter_by(**kargs).first()
